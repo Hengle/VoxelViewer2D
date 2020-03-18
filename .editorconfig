@@ -1,0 +1,121 @@
+﻿[*.cs]
+
+##########################################
+######### Special Rules (SA00**) #########
+##########################################
+
+##########################################
+######### Spacing Rules (SA10**) #########
+##########################################
+
+# SA0001: XML comment analysis is disabled due to project configuration
+dotnet_diagnostic.SA0001.severity = none
+
+# SA1003: Symbols should be spaced correctly
+dotnet_diagnostic.SA1003.severity = none
+
+# SA1005: Single line comments should begin with single space
+dotnet_diagnostic.SA1005.severity = none
+
+# SA1008: Opening parenthesis should be spaced correctly
+dotnet_diagnostic.SA1008.severity = none
+
+# SA1009: Closing parenthesis should be spaced correctly
+dotnet_diagnostic.SA1009.severity = none
+
+# SA1010: Opening square brackets should be spaced correctly
+dotnet_diagnostic.SA1010.severity = none
+
+# SA1011: Closing square brackets should be spaced correctly
+dotnet_diagnostic.SA1011.severity = none
+
+# SA1019: Member access symbols should be spaced correctly
+dotnet_diagnostic.SA1019.severity = none
+
+# SA1025: Code should not contain multiple whitespace in a row
+dotnet_diagnostic.SA1025.severity = none
+
+# SA1028: Code should not contain trailing whitespace
+dotnet_diagnostic.SA1028.severity = warning
+
+##############################################
+######### Readability Rules (SA11**) #########
+##############################################
+
+# SA1101: Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = none
+
+# SA1111: Closing parenthesis should be on line of last parameter
+dotnet_diagnostic.SA1111.severity = none
+
+###########################################
+######### Ordering Rules (SA12**) #########
+###########################################
+
+# SA1201: Elements should appear in the correct order
+dotnet_diagnostic.SA1201.severity = none
+
+# SA1202: Elements should be ordered by access
+dotnet_diagnostic.SA1202.severity = none
+
+# SA1204: Static elements should appear before instance elements
+dotnet_diagnostic.SA1204.severity = none
+
+#########################################
+######### Naming Rules (SA13**) #########
+#########################################
+
+##################################################
+######### Maintainability Rules (SA14**) #########
+##################################################
+
+# SA1401: Fields should be private
+dotnet_diagnostic.SA1401.severity = none
+
+#########################################
+######### Layout Rules (SA15**) #########
+#########################################
+
+# SA1500: Braces for multi-line statements should not share line
+dotnet_diagnostic.SA1500.severity = none
+
+# SA1503: Braces should not be omitted
+dotnet_diagnostic.SA1503.severity = none
+
+# SA1505: Opening braces should not be followed by blank line
+dotnet_diagnostic.SA1505.severity = none
+
+# SA1507: Code should not contain multiple blank lines in a row
+dotnet_diagnostic.SA1507.severity = none
+
+# SA1508: Closing braces should not be preceded by blank line
+dotnet_diagnostic.SA1508.severity = none
+
+# SA1512: Single-line comments should not be followed by blank line
+dotnet_diagnostic.SA1512.severity = none
+
+# SA1513: Closing brace should be followed by blank line
+dotnet_diagnostic.SA1513.severity = none
+
+# SA1515: Single-line comment should be preceded by blank line
+dotnet_diagnostic.SA1515.severity = none
+
+# SA1516: Elements should be separated by blank line
+dotnet_diagnostic.SA1516.severity = none
+
+################################################
+######### Documentation Rules (SA16**) #########
+################################################
+
+# SA1600: Elements should be documented
+dotnet_diagnostic.SA1600.severity = none
+
+# SA1601: Partial elements should be documented
+dotnet_diagnostic.SA1601.severity = none
+
+# SA1633: File should have header
+dotnet_diagnostic.SA1633.severity = none
+
+##############################################
+######### Alternative Rules (SX00**) #########
+##############################################

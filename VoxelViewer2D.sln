@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29827.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoxelViewer2D.Presentation", "VoxelViewer.Presentation\VoxelViewer2D.Presentation.csproj", "{CFBC2905-3D3A-4C32-836F-DC413CB8EB02}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoxelViewer2D.Domain", "VoxelViewer.Domain\VoxelViewer2D.Domain.csproj", "{F75CBC23-7D0B-4409-9164-166D8C5B3F59}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E10232B6-4A41-4105-B2D5-C9700FE48B74}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CFBC2905-3D3A-4C32-836F-DC413CB8EB02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFBC2905-3D3A-4C32-836F-DC413CB8EB02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFBC2905-3D3A-4C32-836F-DC413CB8EB02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFBC2905-3D3A-4C32-836F-DC413CB8EB02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F75CBC23-7D0B-4409-9164-166D8C5B3F59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F75CBC23-7D0B-4409-9164-166D8C5B3F59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F75CBC23-7D0B-4409-9164-166D8C5B3F59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F75CBC23-7D0B-4409-9164-166D8C5B3F59}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {578E161D-99F3-4087-AC28-6A2778ED1D2B}
+	EndGlobalSection
+EndGlobal
