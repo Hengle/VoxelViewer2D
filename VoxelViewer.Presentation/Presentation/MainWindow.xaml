@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Controls="clr-namespace:System.Windows.Controls"
-    xmlns:Local="clr-namespace:VoxelViewer2D.Presentation"
+    xmlns:App="clr-namespace:VoxelViewer2D.Presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Voxel Viewer 2D"
@@ -24,22 +24,22 @@
             Grid.Row="1"
             Background="Gray"
             RenderTransformOrigin="0.0,0.0">
-            <Local:VoxelViewer
+            <App:VoxelViewer
                 Width="64"
                 Height="32"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 ClipToBounds="True"
                 RenderTransformOrigin="0.0,0.0">
-                <Local:VoxelViewer.RenderTransform>
+                <App:VoxelViewer.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="10" ScaleY="10" />
                         <SkewTransform />
                         <RotateTransform />
                         <TranslateTransform />
                     </TransformGroup>
-                </Local:VoxelViewer.RenderTransform>
-            </Local:VoxelViewer>
+                </App:VoxelViewer.RenderTransform>
+            </App:VoxelViewer>
         </Controls:ContentViewer>
     </Grid>
 </Window>

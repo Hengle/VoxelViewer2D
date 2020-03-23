@@ -1,11 +1,10 @@
-﻿namespace System.Windows.Controls {
+﻿namespace System.Windows {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Text;
-    using System.Windows;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
 
@@ -17,15 +16,15 @@
 
         public static void TakeSnapshot(UIElement control, double scale) {
             var size = (Vector) control.DesiredSize * scale;
-            var bitmap = Render( control, size.X, size.Y );
+            var bitmap = GetSnapshot( control, size.X, size.Y );
             var path = GetUniquePath( PathToSave );
             SaveSnapshot( bitmap, path );
             Trace.WriteLine( "Snapshot is saved: " + path );
         }
 
 
-        // Helpers/Render
-        private static BitmapSource Render(UIElement control, double width, double height) {
+        // Helpers/UIElement
+        private static BitmapSource GetSnapshot(UIElement control, double width, double height) {
             var visual = new DrawingVisual();
             using (var context = visual.RenderOpen()) {
                 var brush = new VisualBrush( control );

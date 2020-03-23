@@ -3,21 +3,15 @@
     using System.Collections.Generic;
     using System.Text;
 
-    public struct VoxelCell {
+    public readonly struct VoxelCell {
 
         public const int MaxValue = 255;
 
-        public int Value { get; private set; }
+        public int Value { get; }
         public float Value01 => (float) Value / MaxValue;
 
 
         public VoxelCell(int value) {
-            Value = value;
-        }
-
-
-        // Set
-        public void SetValue(int value) {
             Value = value;
         }
 
@@ -31,6 +25,12 @@
         }
         public string ToString((int X, int Y) pos) {
             return $"VoxelCell: {Value}, {pos}";
+        }
+
+
+        // Utils/Operators
+        public static explicit operator VoxelCell(int value) {
+            return new VoxelCell( value );
         }
 
 

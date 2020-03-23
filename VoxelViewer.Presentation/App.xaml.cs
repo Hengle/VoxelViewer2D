@@ -20,14 +20,10 @@
         // Events
         protected override void OnStartup(StartupEventArgs e) {
             var services = new ServiceCollection();
-            services.AddSingleton( new VoxelMap( 128, 64 ).Fill() );
+            services.AddSingleton( VoxelMapNoiseFactory.Create( 128, 64 ) );
+            //services.AddSingleton( VoxelMapCircleFactory.Create( 128, 64, 64, 32, 32 ) );
+            //services.AddSingleton(  VoxelMapBitmapFactory.Create( VoxelViewer2D.Properties.Resources.Image_1 ) );
             Container = services.BuildServiceProvider();
-        }
-
-        protected override void OnActivated(EventArgs e) {
-        }
-
-        protected override void OnDeactivated(EventArgs e) {
         }
 
         protected override void OnExit(ExitEventArgs e) {

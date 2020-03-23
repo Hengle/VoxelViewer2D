@@ -35,6 +35,53 @@
             }
         }
 
+        // Events/Keyboard
+        protected override void OnKeyDown(KeyEventArgs e) {
+            if (e.Key == Key.C) {
+                Map.Clear();
+                e.Handled = true;
+            }
+            if (e.Key == Key.F12) {
+                Snapshot.TakeSnapshot( this, 10 );
+                e.Handled = true;
+            }
+            if (e.Handled) InvalidateVisual();
+        }
+
+        // Events/Mouse
+        protected override void OnMouseDown(MouseButtonEventArgs e) {
+            if (e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
+                var pos = Floor( e.GetPosition( this ) );
+                Map.SetCell( pos, (VoxelCell) VoxelCell.MaxValue );
+                e.Handled = true;
+            }
+            if (e.RightButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
+                var pos = Floor( e.GetPosition( this ) );
+                Map.SetCell( pos, default );
+                e.Handled = true;
+            }
+            if (e.MiddleButton == MouseButtonState.Pressed) {
+                var pos = Floor( e.GetPosition( this ) );
+                var cell = Map.GetCell( pos );
+                Trace.WriteLine( cell.ToString( pos ) );
+                e.Handled = true;
+            }
+            if (e.Handled) InvalidateVisual();
+        }
+        protected override void OnMouseMove(MouseEventArgs e) {
+            if (e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
+                var pos = Floor( e.GetPosition( this ) );
+                Map.SetCell( pos, (VoxelCell) VoxelCell.MaxValue );
+                e.Handled = true;
+            }
+            if (e.RightButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
+                var pos = Floor( e.GetPosition( this ) );
+                Map.SetCell( pos, (VoxelCell) 0 );
+                e.Handled = true;
+            }
+            if (e.Handled) InvalidateVisual();
+        }
+
         // Events/Render
         protected override void OnRender(DrawingContext context) {
             if (IsInDesignMode) {
@@ -48,23 +95,6 @@
             Focus();
         }
 
-        // Events/Keyboard
-        protected override void OnKeyDown(KeyEventArgs e) {
-            if (e.Key == Key.F12) {
-                Snapshot.TakeSnapshot( this, 10 );
-            }
-        }
-
-        // Events/Mouse
-        protected override void OnMouseDown(MouseButtonEventArgs e) {
-            if (e.MiddleButton == MouseButtonState.Pressed) {
-                var pos = Floor( e.GetPosition( this ) );
-                var cell = Map.GetCell( pos );
-                Trace.WriteLine( cell.ToString( pos ) );
-                e.Handled = true;
-            }
-        }
-
 
         // Helpers/Render
         private static GuidelineSet GetGuidelines(int width, int height) {
@@ -74,8 +104,8 @@
             }.GetAsFrozen();
         }
         private static void Render(DrawingContext context, VoxelMap map) {
-            foreach (var (x, y) in map.GetCells()) {
-                Render( context, map.GetCell( x, y ), x, y );
+            foreach (var (item, x, y) in map.GetCells()) {
+                Render( context, item, x, y );
             }
         }
         private static void Render(DrawingContext context, VoxelCell cell, int x, int y) {

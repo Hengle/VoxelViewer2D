@@ -1,28 +1,27 @@
 ﻿namespace VoxelViewer2D.Domain {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
 
-    public static class VoxelMapFiller {
+    public static class VoxelMapCircleFactory {
 
         private static readonly Random Random = new Random();
 
 
-        public static VoxelMap Fill(this VoxelMap map) {
-            Fill( map, map.Width / 2, map.Height / 2, 32 );
-            return map;
+        public static VoxelMap Create(int width, int height, int cx, int cy, int radius) {
+            var cells = EnumerableEx.GetIterator2D( width, height )
+                .Select( i => GetValue( i.X, i.Y, cx, cy, radius ) )
+                .Select( i => (VoxelCell) i )
+                .ToArray2D( width, height );
+            return new VoxelMap( width, height, cells );
         }
 
-        private static void Fill(VoxelMap map, int cx, int cy, int radius) {
-            foreach (var (x, y) in map.GetCells()) {
-                var value = GetDistance( x, y, cx, cy )
-                    .ChangeRange( radius, VoxelCell.MaxValue )
-                    .Invert( VoxelCell.MaxValue )
-                    .WithRandom( 150 );
-                map.GetCellRef( x, y ).SetValue( value );
-            }
-        }
 
+        // Helpers/Value
+        private static int GetValue(int x, int y, int cx, int cy, int radius) {
+            return GetDistance( x, y, cx, cy ).ChangeRange( radius, VoxelCell.MaxValue ).Invert( VoxelCell.MaxValue ).WithRandom( 150 );
+        }
 
         // Helpers/Distance
         private static int GetDistance(int x, int y, int x2, int y2) {
@@ -48,13 +47,6 @@
         }
         // Helpers/Random
         private static int WithRandom(this int value, int max) {
-            //var value01 = (double) value / VoxelCell.MaxValue;
-            //value01 = Math.Pow( value01, 1.0 / 1.5 );
-            //if (value01 < Random.NextDouble() * 0.6) {
-            //    return 0;
-            //}
-            //return value;
-
             var invValue = Math.Max( max - value, 0 );
             value -= Random.Next( invValue );
             return Math.Max( value, 0 );
