@@ -12,14 +12,14 @@
     using Microsoft.Extensions.DependencyInjection;
     using VoxelViewer2D.Domain;
 
-    public class VoxelViewer : UserControl {
+    public class VoxelMapView : UserControl {
 
         private bool IsInDesignMode => DesignerProperties.GetIsInDesignMode( this );
         private bool IsInWindowMode => !DesignerProperties.GetIsInDesignMode( this );
         private VoxelMap Map { get; }
 
 
-        public VoxelViewer() {
+        public VoxelMapView() {
             Focusable = true;
             if (IsInWindowMode) {
                 Map = App.Current.Container.GetRequiredService<VoxelMap>();
@@ -39,10 +39,6 @@
         protected override void OnKeyDown(KeyEventArgs e) {
             if (e.Key == Key.C) {
                 Map.Clear();
-                e.Handled = true;
-            }
-            if (e.Key == Key.F12) {
-                Snapshot.TakeSnapshot( this, 10 );
                 e.Handled = true;
             }
             if (e.Handled) InvalidateVisual();

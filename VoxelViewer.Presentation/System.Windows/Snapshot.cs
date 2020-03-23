@@ -15,11 +15,11 @@
 
 
         public static void TakeSnapshot(UIElement control, double scale) {
-            var size = (Vector) control.DesiredSize * scale;
+            var size = (Vector) control.RenderSize * scale;
             var bitmap = GetSnapshot( control, size.X, size.Y );
             var path = GetUniquePath( PathToSave );
             SaveSnapshot( bitmap, path );
-            Trace.WriteLine( "Snapshot is saved: " + path );
+            Trace.WriteLine( $"Snapshot is saved: Width={bitmap.Width}, Height={bitmap.Height}, Path={path}" );
         }
 
 

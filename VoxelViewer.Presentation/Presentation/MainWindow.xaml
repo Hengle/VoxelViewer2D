@@ -2,8 +2,8 @@
     x:Class="VoxelViewer2D.Presentation.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Controls="clr-namespace:System.Windows.Controls"
     xmlns:App="clr-namespace:VoxelViewer2D.Presentation"
+    xmlns:Controls="clr-namespace:System.Windows.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Voxel Viewer 2D"
@@ -16,6 +16,9 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Menu d:IsLocked="True">
+            <MenuItem Header="Tools">
+                <MenuItem Click="OnSnapshotClick" Header="Snapshot" />
+            </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Click="OnHelpClick" Header="Help" />
             </MenuItem>
@@ -24,22 +27,23 @@
             Grid.Row="1"
             Background="Gray"
             RenderTransformOrigin="0.0,0.0">
-            <App:VoxelViewer
+            <App:VoxelMapView
+                x:Name="VoxelMapView"
                 Width="64"
                 Height="32"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 ClipToBounds="True"
                 RenderTransformOrigin="0.0,0.0">
-                <App:VoxelViewer.RenderTransform>
+                <App:VoxelMapView.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="10" ScaleY="10" />
                         <SkewTransform />
                         <RotateTransform />
                         <TranslateTransform />
                     </TransformGroup>
-                </App:VoxelViewer.RenderTransform>
-            </App:VoxelViewer>
+                </App:VoxelMapView.RenderTransform>
+            </App:VoxelMapView>
         </Controls:ContentViewer>
     </Grid>
 </Window>

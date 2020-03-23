@@ -22,7 +22,7 @@
             var services = new ServiceCollection();
             services.AddSingleton( VoxelMapNoiseFactory.Create( 128, 64 ) );
             //services.AddSingleton( VoxelMapCircleFactory.Create( 128, 64, 64, 32, 32 ) );
-            //services.AddSingleton(  VoxelMapBitmapFactory.Create( VoxelViewer2D.Properties.Resources.Image_1 ) );
+            //services.AddSingleton( VoxelMapBitmapFactory.Create( VoxelViewer2D.Properties.Resources.Image_1 ) );
             Container = services.BuildServiceProvider();
         }
 

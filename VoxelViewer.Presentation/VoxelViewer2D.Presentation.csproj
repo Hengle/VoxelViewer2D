@@ -93,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="System.Windows.Controls\ContentViewer.cs" />
-    <Compile Include="Presentation\VoxelViewer.cs" />
+    <Compile Include="Presentation\VoxelMapView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
