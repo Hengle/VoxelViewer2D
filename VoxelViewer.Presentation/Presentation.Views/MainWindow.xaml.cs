@@ -1,4 +1,4 @@
-﻿namespace VoxelViewer2D.Presentation {
+﻿namespace VoxelViewer2D.Presentation.Views {
     using System;
     using System.Collections.Generic;
     using System.Text;

@@ -1,4 +1,4 @@
-﻿namespace VoxelViewer2D.Presentation {
+﻿namespace VoxelViewer2D.Presentation.Views {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -35,47 +35,46 @@
             }
         }
 
+        // Events/Mouse
+        protected override void OnMouseDown(MouseButtonEventArgs e) {
+            var pos = Floor( e.GetPosition( this ) );
+            var cell = Map.GetCell( pos );
+            if (e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
+                Map.SetCell( pos, VoxelCell.MaxValue, out var isChanged );
+                if (isChanged) InvalidateVisual();
+                e.Handled = true;
+            }
+            if (e.RightButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
+                Map.SetCell( pos, VoxelCell.MinValue, out var isChanged );
+                if (isChanged) InvalidateVisual();
+                e.Handled = true;
+            }
+            if (e.MiddleButton == MouseButtonState.Pressed) {
+                Trace.WriteLine( cell.ToString( pos ) );
+                e.Handled = true;
+            }
+        }
+        protected override void OnMouseMove(MouseEventArgs e) {
+            var pos = Floor( e.GetPosition( this ) );
+            if (e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
+                Map.SetCell( pos, VoxelCell.MaxValue, out var isChanged );
+                if (isChanged) InvalidateVisual();
+                e.Handled = true;
+            }
+            if (e.RightButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
+                Map.SetCell( pos, VoxelCell.MinValue, out var isChanged );
+                if (isChanged) InvalidateVisual();
+                e.Handled = true;
+            }
+        }
+
         // Events/Keyboard
         protected override void OnKeyDown(KeyEventArgs e) {
             if (e.Key == Key.C) {
                 Map.Clear();
+                InvalidateVisual();
                 e.Handled = true;
             }
-            if (e.Handled) InvalidateVisual();
-        }
-
-        // Events/Mouse
-        protected override void OnMouseDown(MouseButtonEventArgs e) {
-            if (e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
-                var pos = Floor( e.GetPosition( this ) );
-                Map.SetCell( pos, (VoxelCell) VoxelCell.MaxValue );
-                e.Handled = true;
-            }
-            if (e.RightButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
-                var pos = Floor( e.GetPosition( this ) );
-                Map.SetCell( pos, default );
-                e.Handled = true;
-            }
-            if (e.MiddleButton == MouseButtonState.Pressed) {
-                var pos = Floor( e.GetPosition( this ) );
-                var cell = Map.GetCell( pos );
-                Trace.WriteLine( cell.ToString( pos ) );
-                e.Handled = true;
-            }
-            if (e.Handled) InvalidateVisual();
-        }
-        protected override void OnMouseMove(MouseEventArgs e) {
-            if (e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
-                var pos = Floor( e.GetPosition( this ) );
-                Map.SetCell( pos, (VoxelCell) VoxelCell.MaxValue );
-                e.Handled = true;
-            }
-            if (e.RightButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
-                var pos = Floor( e.GetPosition( this ) );
-                Map.SetCell( pos, (VoxelCell) 0 );
-                e.Handled = true;
-            }
-            if (e.Handled) InvalidateVisual();
         }
 
         // Events/Render

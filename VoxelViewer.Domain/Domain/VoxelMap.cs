@@ -39,27 +39,23 @@
         }
 
         // Set/Cell
-        public VoxelMap SetCell(int x, int y, VoxelCell cell) {
+        public void SetCell(int x, int y, VoxelCell cell) {
             Cells[ x, y ] = cell;
-            return this;
         }
-        public VoxelMap SetCell((int X, int Y) pos, VoxelCell cell) {
+        public void SetCell((int X, int Y) pos, VoxelCell cell) {
             Cells[ pos.X, pos.Y ] = cell;
-            return this;
         }
-        // Set/Cells
-        //public VoxelMap SetCells(IEnumerable<VoxelCell> cells) {
-        //    using (var enumerator = cells.GetEnumerator()) {
-        //        for (var y = 0; y < Height; y++) {
-        //            for (var x = 0; x < Width; x++) {
-        //                if (enumerator.MoveNext()) {
-        //                    Cells[ x, y ] = enumerator.Current;
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return this;
-        //}
+        // Set/Cell/Changed
+        public void SetCell(int x, int y, VoxelCell cell, out bool isChanged) {
+            var oldCell = Cells[ x, y ];
+            Cells[ x, y ] = cell;
+            isChanged = oldCell != cell;
+        }
+        public void SetCell((int X, int Y) pos, VoxelCell cell, out bool isChanged) {
+            var oldCell = Cells[ pos.X, pos.Y ];
+            Cells[ pos.X, pos.Y ] = cell;
+            isChanged = oldCell != cell;
+        }
 
         // Clear
         public void Clear() {
