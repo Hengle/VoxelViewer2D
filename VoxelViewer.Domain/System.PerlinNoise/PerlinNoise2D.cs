@@ -1,4 +1,4 @@
-﻿namespace PerlinNoise {
+﻿namespace System.PerlinNoise {
     using System;
     using System.Collections;
     using System.Collections.Generic;

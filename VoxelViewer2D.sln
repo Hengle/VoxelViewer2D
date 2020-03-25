@@ -12,6 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoxelViewer2D.Application", "VoxelViewer2D.Application\VoxelViewer2D.Application.csproj", "{14DB0A2A-45C9-4730-988C-78C0115BE24C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoxelViewer2D", "VoxelViewer2D\VoxelViewer2D.csproj", "{E2CD6536-925D-4C84-BE13-147550CD4E87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +30,14 @@ Global
 		{F75CBC23-7D0B-4409-9164-166D8C5B3F59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F75CBC23-7D0B-4409-9164-166D8C5B3F59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F75CBC23-7D0B-4409-9164-166D8C5B3F59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14DB0A2A-45C9-4730-988C-78C0115BE24C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14DB0A2A-45C9-4730-988C-78C0115BE24C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14DB0A2A-45C9-4730-988C-78C0115BE24C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14DB0A2A-45C9-4730-988C-78C0115BE24C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2CD6536-925D-4C84-BE13-147550CD4E87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2CD6536-925D-4C84-BE13-147550CD4E87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2CD6536-925D-4C84-BE13-147550CD4E87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2CD6536-925D-4C84-BE13-147550CD4E87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

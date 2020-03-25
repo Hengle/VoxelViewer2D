@@ -3,6 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:VoxelViewer2D"
-    StartupUri="Presentation.Views/MainWindow.xaml">
+    StartupUri="pack://application:,,,/VoxelViewer2D.Presentation;component/Presentation.Views/MainWindow.xaml">
     <Application.Resources />
 </Application>

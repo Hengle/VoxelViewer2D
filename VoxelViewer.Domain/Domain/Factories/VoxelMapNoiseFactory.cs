@@ -2,8 +2,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.PerlinNoise;
     using System.Text;
-    using PerlinNoise;
 
     public static class VoxelMapNoiseFactory {
 
