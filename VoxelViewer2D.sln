@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoxelViewer2D.Application", "VoxelViewer2D.Application\VoxelViewer2D.Application.csproj", "{14DB0A2A-45C9-4730-988C-78C0115BE24C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoxelViewer2D.Application", "VoxelViewer2D.Application\VoxelViewer2D.Application.csproj", "{14DB0A2A-45C9-4730-988C-78C0115BE24C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoxelViewer2D", "VoxelViewer2D\VoxelViewer2D.csproj", "{E2CD6536-925D-4C84-BE13-147550CD4E87}"
 EndProject

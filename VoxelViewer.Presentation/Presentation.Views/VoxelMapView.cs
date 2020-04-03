@@ -12,28 +12,21 @@
     using Microsoft.Extensions.DependencyInjection;
     using VoxelViewer2D.Domain;
 
-    public class VoxelMapView : UserControl {
+    public class VoxelMapView : Control {
 
         private bool IsInDesignMode => DesignerProperties.GetIsInDesignMode( this );
         private bool IsInWindowMode => !DesignerProperties.GetIsInDesignMode( this );
-        private VoxelMap Map { get; }
-
-
-        public VoxelMapView() {
-            Focusable = true;
-            if (IsInWindowMode) {
-                Map = App.Current.Container.GetRequiredService<VoxelMap>();
-            }
-        }
+        private VoxelMap Map { get; set; }
 
 
         // Events/Init
         protected override void OnInitialized(EventArgs e) {
-            base.OnInitialized( e );
             if (IsInWindowMode) {
+                Map = App.Current.Container.GetRequiredService<VoxelMap>();
                 (Width, Height) = (Map.Width, Map.Height);
             }
         }
+
 
         // Events/Mouse
         protected override void OnMouseDown(MouseButtonEventArgs e) {
@@ -53,6 +46,7 @@
                 Trace.WriteLine( cell.ToString( pos ) );
                 e.Handled = true;
             }
+            Focus();
         }
         protected override void OnMouseMove(MouseEventArgs e) {
             var pos = Floor( e.GetPosition( this ) );
@@ -87,7 +81,6 @@
                 Render( context, Map );
                 context.Pop();
             }
-            Focus();
         }
 
 

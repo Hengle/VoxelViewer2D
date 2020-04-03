@@ -19,13 +19,13 @@
 
         // Helpers/Value
         private static int GetValue(float x, float y) {
-            return PerlinNoise2D.GetNoise01( x / 6f, y / 6f, 1 ).ToInt( 255 ).Compress( 6 );
+            return PerlinNoise2D.GetNoise01( x / 6f, y / 6f, 1 ).ToInt( 255 ).Step( 6 );
         }
         // Helpers/Math
         private static int ToInt(this float value, int factor) {
             return (int) (value * factor);
         }
-        private static int Compress(this int value, int factor) {
+        private static int Step(this int value, int factor) {
             value /= factor;
             value *= factor;
             return value;

@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>VoxelViewer2D</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Application.ViewModels\" />
     <Folder Include="Presentation.Views\" />
   </ItemGroup>
 

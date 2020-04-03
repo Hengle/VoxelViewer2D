@@ -22,8 +22,9 @@
             builder.AppendLine( "Translate - Mouse Move + Left/Right Mouse Button" );
             builder.AppendLine( "Zoom - Mouse Wheel + Left/Right Mouse Button" );
             builder.AppendLine();
+            builder.AppendLine( "Add Cell Value - Left Mouse Button + Left Ctrl" );
+            builder.AppendLine( "Remove Cell Value - Right Mouse Button + Left Ctrl" );
             builder.AppendLine( "Print Cell Info - Middle Mouse Button" );
-            builder.AppendLine( "Set Cell Value - Left/Right Mouse Button + Left Ctrl" );
             builder.AppendLine( "Clear - C" );
             MessageBox.Show( builder.ToString(), "Help", MessageBoxButton.OK, MessageBoxImage.Information );
             e.Handled = true;
