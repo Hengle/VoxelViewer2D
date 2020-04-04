@@ -105,12 +105,9 @@
         // Helpers/Render
         private static void Render(DrawingContext context, VoxelMap map) {
             foreach (var (item, x, y) in map.GetCells()) {
-                Render( context, item, x, y );
+                var brush = GetBrush( item.Value01 );
+                context.DrawRectangle( brush, null, new Rect( x, y, 1, 1 ) );
             }
-        }
-        private static void Render(DrawingContext context, VoxelCell cell, int x, int y) {
-            var brush = GetBrush( cell.Value01 );
-            context.DrawRectangle( brush, null, new Rect( x, y, 1, 1 ) );
         }
         private static void RenderGrid(DrawingContext context, int width, int height) {
             for (var y = 0; y <= height; y += 2) {
