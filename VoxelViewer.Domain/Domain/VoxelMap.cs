@@ -45,16 +45,16 @@
         public void SetCell((int X, int Y) pos, VoxelCell cell) {
             Cells[ pos.X, pos.Y ] = cell;
         }
-        // Set/Cell/Changed
-        public void SetCell(int x, int y, VoxelCell cell, out bool isChanged) {
+        // Set/Cell/IsChanged
+        public bool SetCellAndGetIsChanged(int x, int y, VoxelCell cell) {
             var oldCell = Cells[ x, y ];
             Cells[ x, y ] = cell;
-            isChanged = oldCell != cell;
+            return oldCell != cell;
         }
-        public void SetCell((int X, int Y) pos, VoxelCell cell, out bool isChanged) {
+        public bool SetCellAndGetIsChanged((int X, int Y) pos, VoxelCell cell) {
             var oldCell = Cells[ pos.X, pos.Y ];
             Cells[ pos.X, pos.Y ] = cell;
-            isChanged = oldCell != cell;
+            return oldCell != cell;
         }
 
         // Clear

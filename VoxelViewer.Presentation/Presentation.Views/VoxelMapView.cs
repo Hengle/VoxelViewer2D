@@ -30,46 +30,63 @@
 
         // Events/Mouse
         protected override void OnMouseDown(MouseButtonEventArgs e) {
-            var pos = Floor( e.GetPosition( this ) );
-            var cell = Map.GetCell( pos );
+            Focus();
             if (e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
-                Map.SetCell( pos, VoxelCell.MaxValue, out var isChanged );
-                if (isChanged) InvalidateVisual();
+                var pos = Floor( e.GetPosition( this ) );
+                OnSetCell( pos );
                 e.Handled = true;
             }
             if (e.RightButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
-                Map.SetCell( pos, VoxelCell.MinValue, out var isChanged );
-                if (isChanged) InvalidateVisual();
+                var pos = Floor( e.GetPosition( this ) );
+                OnRemoveCell( pos );
                 e.Handled = true;
             }
             if (e.MiddleButton == MouseButtonState.Pressed) {
-                Trace.WriteLine( cell.ToString( pos ) );
+                var pos = Floor( e.GetPosition( this ) );
+                OnPrintCell( pos );
                 e.Handled = true;
             }
-            Focus();
         }
         protected override void OnMouseMove(MouseEventArgs e) {
-            var pos = Floor( e.GetPosition( this ) );
             if (e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
-                Map.SetCell( pos, VoxelCell.MaxValue, out var isChanged );
-                if (isChanged) InvalidateVisual();
+                var pos = Floor( e.GetPosition( this ) );
+                OnSetCell( pos );
                 e.Handled = true;
             }
             if (e.RightButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
-                Map.SetCell( pos, VoxelCell.MinValue, out var isChanged );
-                if (isChanged) InvalidateVisual();
+                var pos = Floor( e.GetPosition( this ) );
+                OnRemoveCell( pos );
                 e.Handled = true;
             }
         }
+        // Events/Mouse/VoxelMap
+        private void OnSetCell((int, int) pos) {
+            var isChanged = Map.SetCellAndGetIsChanged( pos, VoxelCell.MaxValue );
+            if (isChanged) InvalidateVisual();
+        }
+        private void OnRemoveCell((int, int) pos) {
+            var isChanged = Map.SetCellAndGetIsChanged( pos, VoxelCell.MinValue );
+            if (isChanged) InvalidateVisual();
+        }
+        private void OnPrintCell((int, int) pos) {
+            var cell = Map.GetCell( pos );
+            Trace.WriteLine( cell.ToString( pos ) );
+        }
+
 
         // Events/Keyboard
         protected override void OnKeyDown(KeyEventArgs e) {
             if (e.Key == Key.C) {
-                Map.Clear();
-                InvalidateVisual();
+                OnClear();
                 e.Handled = true;
             }
         }
+        // Events/Keyboard/VoxelMap
+        private void OnClear() {
+            Map.Clear();
+            InvalidateVisual();
+        }
+
 
         // Events/Render
         protected override void OnRender(DrawingContext context) {
@@ -79,18 +96,13 @@
             if (IsInWindowMode) {
                 context.PushGuidelineSet( GetGuidelines( Map.Width, Map.Height ) );
                 Render( context, Map );
+                RenderGrid( context, Map.Width, Map.Height );
                 context.Pop();
             }
         }
 
 
         // Helpers/Render
-        private static GuidelineSet GetGuidelines(int width, int height) {
-            return (GuidelineSet) new GuidelineSet() {
-                GuidelinesX = new DoubleCollection( Enumerable.Range( 0, width ).Select( a => (double) a ) ),
-                GuidelinesY = new DoubleCollection( Enumerable.Range( 0, height ).Select( a => (double) a ) ),
-            }.GetAsFrozen();
-        }
         private static void Render(DrawingContext context, VoxelMap map) {
             foreach (var (item, x, y) in map.GetCells()) {
                 Render( context, item, x, y );
@@ -100,6 +112,23 @@
             var brush = GetBrush( cell.Value01 );
             context.DrawRectangle( brush, null, new Rect( x, y, 1, 1 ) );
         }
+        private static void RenderGrid(DrawingContext context, int width, int height) {
+            for (var y = 0; y <= height; y += 2) {
+                var pen = GetPen( y );
+                context.DrawLine( pen, new Point( 0, y ), new Point( width, y ) );
+            }
+            for (var x = 0; x <= width; x += 2) {
+                var pen = GetPen( x );
+                context.DrawLine( pen, new Point( x, 0 ), new Point( x, height ) );
+            }
+        }
+        // Helpers/Render/Utils
+        private static GuidelineSet GetGuidelines(int width, int height) {
+            return (GuidelineSet) new GuidelineSet() {
+                GuidelinesX = new DoubleCollection( Enumerable.Range( 0, width ).Select( a => (double) a ) ),
+                GuidelinesY = new DoubleCollection( Enumerable.Range( 0, height ).Select( a => (double) a ) ),
+            }.GetAsFrozen();
+        }
         private static Brush GetBrush(float value) {
             if (value < 0) return Brushes.Blue;
             if (value > 1) return Brushes.Red;
@@ -107,10 +136,16 @@
             brush.Freeze();
             return brush;
         }
+        private static Pen GetPen(int i) {
+            if (i % 8 == 0) return new Pen( Brushes.Black, 0.02 );
+            if (i % 4 == 0) return new Pen( Brushes.Black, 0.02 / 5 );
+            if (i % 2 == 0) return new Pen( Brushes.Black, 0.02 / 25 );
+            return default;
+        }
 
         // Helpers/Math
         private static (int X, int Y) Floor(Point point) {
-            return ((int, int)) (point.X, point.Y);
+            return ((int, int)) (Math.Floor( point.X ), Math.Floor( point.Y ));
         }
 
 

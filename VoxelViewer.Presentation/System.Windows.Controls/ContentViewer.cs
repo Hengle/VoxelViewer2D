@@ -9,9 +9,10 @@
 
     // Note: UserControl allows to use background
     // Note: Background allows to handle mouse events
+    // Note: CaptureMouse() may raise OnMouseMove event
     public class ContentViewer : UserControl {
 
-        private Point? PrevMousePosition { get; set; }
+        private Point prevMousePosition;
         private new UIElement Content => (UIElement) base.Content;
         private TransformGroup ContentTransform => (TransformGroup) Content.RenderTransform;
         private TranslateTransform ContentTranslateTransform => ContentTransform.Children.OfType<TranslateTransform>().First();
@@ -20,28 +21,21 @@
 
         // Events/Mouse
         protected override void OnMouseDown(MouseButtonEventArgs e) {
+            Content.Focus();
             if (IsPressed( e ) && !IsMouseCaptured) {
+                prevMousePosition = e.GetPosition( this );
                 CaptureMouse();
-                {
-                    PrevMousePosition = e.GetPosition( this );
-                }
                 e.Handled = true;
             }
         }
         protected override void OnMouseMove(MouseEventArgs e) {
-            if (IsPressed( e ) && IsMouseCaptured && PrevMousePosition.HasValue) {
-                {
-                    OnTranslate( e.GetPosition( this ), PrevMousePosition.Value );
-                    PrevMousePosition = e.GetPosition( this );
-                }
+            if (IsPressed( e ) && IsMouseCaptured) {
+                OnTranslate( e.GetPosition( this ), ref prevMousePosition );
                 e.Handled = true;
             }
         }
         protected override void OnMouseUp(MouseButtonEventArgs e) {
             if (IsReleased( e ) && IsMouseCaptured) {
-                {
-                    PrevMousePosition = null;
-                }
                 ReleaseMouseCapture();
                 e.Handled = true;
             }
@@ -52,13 +46,12 @@
                 e.Handled = true;
             }
         }
-
-
-        // Events/Transform
-        private void OnTranslate(Point position, Point prev) {
+        // Events/Mouse/Transform
+        private void OnTranslate(Point position, ref Point prev) {
             var delta = position - prev;
             Translate( ContentTranslateTransform, delta );
             Content.InvalidateArrange();
+            prev = position;
         }
         private void OnScale(Point position, double delta) {
             var factor = (delta > 0) ? 1.1 : 0.9;
