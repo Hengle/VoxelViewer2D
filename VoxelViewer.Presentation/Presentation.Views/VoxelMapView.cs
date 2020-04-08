@@ -60,15 +60,15 @@
             }
         }
         // Events/Mouse/VoxelMap
-        private void OnSetCell((int, int) pos) {
+        private void OnSetCell(Point2Int pos) {
             var isChanged = Map.SetCellAndGetIsChanged( pos, VoxelCell.MaxValue );
             if (isChanged) InvalidateVisual();
         }
-        private void OnRemoveCell((int, int) pos) {
+        private void OnRemoveCell(Point2Int pos) {
             var isChanged = Map.SetCellAndGetIsChanged( pos, VoxelCell.MinValue );
             if (isChanged) InvalidateVisual();
         }
-        private void OnPrintCell((int, int) pos) {
+        private void OnPrintCell(Point2Int pos) {
             var cell = Map.GetCell( pos );
             Trace.WriteLine( cell.ToString( pos ) );
         }
@@ -95,21 +95,21 @@
             }
             if (IsInWindowMode) {
                 context.PushGuidelineSet( GetGuidelines( Map.Width, Map.Height ) );
-                Render( context, Map );
-                RenderGrid( context, Map.Width, Map.Height );
+                Draw( context, Map );
+                DrawGrid( context, Map.Width, Map.Height );
                 context.Pop();
             }
         }
 
 
-        // Helpers/Render
-        private static void Render(DrawingContext context, VoxelMap map) {
-            foreach (var (item, x, y) in map.GetCells()) {
+        // Helpers/Draw
+        private static void Draw(DrawingContext context, VoxelMap map) {
+            foreach (var (item, pos) in map.GetCells()) {
                 var brush = GetBrush( item.Value01 );
-                context.DrawRectangle( brush, null, new Rect( x, y, 1, 1 ) );
+                context.DrawRectangle( brush, null, new Rect( pos.X, pos.Y, 1, 1 ) );
             }
         }
-        private static void RenderGrid(DrawingContext context, int width, int height) {
+        private static void DrawGrid(DrawingContext context, int width, int height) {
             for (var y = 0; y <= height; y += 2) {
                 var pen = GetPen( y );
                 context.DrawLine( pen, new Point( 0, y ), new Point( width, y ) );
@@ -119,7 +119,7 @@
                 context.DrawLine( pen, new Point( x, 0 ), new Point( x, height ) );
             }
         }
-        // Helpers/Render/Utils
+        // Helpers/Draw/Utils
         private static GuidelineSet GetGuidelines(int width, int height) {
             return (GuidelineSet) new GuidelineSet() {
                 GuidelinesX = new DoubleCollection( Enumerable.Range( 0, width ).Select( a => (double) a ) ),
@@ -141,8 +141,8 @@
         }
 
         // Helpers/Math
-        private static (int X, int Y) Floor(Point point) {
-            return ((int, int)) (Math.Floor( point.X ), Math.Floor( point.Y ));
+        private static Point2Int Floor(Point point) {
+            return new Point2Int( (int) Math.Floor( point.X ), (int) Math.Floor( point.Y ) );
         }
 
 

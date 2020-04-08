@@ -18,40 +18,31 @@
         public VoxelMap(int width, int height, VoxelCell[,] cells) {
             (Width, Height, Area) = (width, height, width * height);
             Cells = cells;
-            if (Cells.GetLength( 0 ) != Width || Cells.GetLength( 1 ) != Height) throw new Exception( $"Cells array is invalid: {Cells.GetLength( 0 )}/{Cells.GetLength( 1 )}, {Width}/{Height}" );
+            if (Cells.GetLength( 0 ) != Width || Cells.GetLength( 1 ) != Height) throw new Exception( $"Cells array is invalid: Actual={Cells.GetLength( 0 )}/{Cells.GetLength( 1 )}, Expected={Width}/{Height}" );
         }
 
 
         // Get/Cell
-        public VoxelCell GetCell(int x, int y) {
-            return Cells[ x, y ];
-        }
-        public VoxelCell GetCell((int X, int Y) pos) {
+        public VoxelCell GetCell(Point2Int pos) {
             return Cells[ pos.X, pos.Y ];
         }
         // Get/Cells
-        public IEnumerable<(VoxelCell Value, int X, int Y)> GetCells() {
+        public IEnumerable<(VoxelCell Value, Point2Int Pos)> GetCells() {
             for (var y = 0; y < Height; y++) {
                 for (var x = 0; x < Width; x++) {
-                    yield return (Cells[ x, y ], x, y);
+                    var cell = Cells[ x, y ];
+                    var pos = new Point2Int( x, y );
+                    yield return (cell, pos);
                 }
             }
         }
 
         // Set/Cell
-        public void SetCell(int x, int y, VoxelCell cell) {
-            Cells[ x, y ] = cell;
-        }
-        public void SetCell((int X, int Y) pos, VoxelCell cell) {
+        public void SetCell(Point2Int pos, VoxelCell cell) {
             Cells[ pos.X, pos.Y ] = cell;
         }
         // Set/Cell/IsChanged
-        public bool SetCellAndGetIsChanged(int x, int y, VoxelCell cell) {
-            var oldCell = Cells[ x, y ];
-            Cells[ x, y ] = cell;
-            return oldCell != cell;
-        }
-        public bool SetCellAndGetIsChanged((int X, int Y) pos, VoxelCell cell) {
+        public bool SetCellAndGetIsChanged(Point2Int pos, VoxelCell cell) {
             var oldCell = Cells[ pos.X, pos.Y ];
             Cells[ pos.X, pos.Y ] = cell;
             return oldCell != cell;
