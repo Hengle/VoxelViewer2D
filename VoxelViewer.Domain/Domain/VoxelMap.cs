@@ -18,7 +18,7 @@
         public VoxelMap(int width, int height, VoxelCell[,] cells) {
             (Width, Height, Area) = (width, height, width * height);
             Cells = cells;
-            if (Cells.GetLength( 0 ) != Width || Cells.GetLength( 1 ) != Height) throw new Exception( $"Cells array is invalid: Actual={Cells.GetLength( 0 )}/{Cells.GetLength( 1 )}, Expected={Width}/{Height}" );
+            if (Cells.GetLength( 0 ) != Width || Cells.GetLength( 1 ) != Height) throw new Exception( $"Cells is invalid: Actual={Cells.GetLength( 0 )}/{Cells.GetLength( 1 )}, Expected={Width}/{Height}" );
         }
 
 

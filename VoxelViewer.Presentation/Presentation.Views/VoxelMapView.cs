@@ -134,9 +134,9 @@
             return brush;
         }
         private static Pen GetPen(int i) {
-            if (i % 8 == 0) return new Pen( Brushes.Black, 0.02 );
-            if (i % 4 == 0) return new Pen( Brushes.Black, 0.02 / 5 );
-            if (i % 2 == 0) return new Pen( Brushes.Black, 0.02 / 25 );
+            if (i % 8 == 0) return new Pen( Brushes.Blue, 0.02 );
+            if (i % 4 == 0) return new Pen( Brushes.Blue, 0.02 / 5 );
+            if (i % 2 == 0) return new Pen( Brushes.Blue, 0.02 / 25 );
             return default;
         }
 
