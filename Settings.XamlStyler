@@ -1,0 +1,57 @@
+{
+    // Ordering/Elements
+    "ReorderGridChildren": false,
+    "ReorderCanvasChildren": false,
+    "ReorderVSM": 2, // None, First, Last
+    "ReorderSetters": 0, // None, Property, TargetName, TargetNameThenProperty 
+    // Ordering/Attributes
+    "EnableAttributeReordering": true,
+    "FirstLineAttributes": "", // Keep on tag-line
+    "AttributeOrderingRuleGroups": [
+        "xmlns",
+        "xmlns:x",
+        "xmlns:d",
+        "xmlns:mc",
+        "xmlns:*",
+        "xmlns:Controls",
+        "xmlns:Views",
+        "xmlns:ViewModels",
+        "x:Class, x:Name, x:Key, x:Uid, x:*, Name, Key, Uid, Title, Header, Background, Foreground, Width, Height, MinWidth, MinHeight, MaxWidth, MaxHeight, Margin, Padding, *Alignment, RenderTransformOrigin, *, *.*",
+        "d:*, mc:*, *:*"
+    ],
+    "OrderAttributesByName": true,
+
+    // Spacing/Elements
+    "SpaceBeforeClosingSlash": true,
+    // Spacing/Attributes
+    "AttributeIndentation": 0,
+    "AttributeIndentationStyle": 1, // Mixed, Spaces 
+    // Spacing/Comments
+    "CommentPadding": 2,
+
+    // MultiLining/Elements
+    "PutEndingBracketOnNewLine": false,
+    // MultiLining/Attributes
+    "RootElementLineBreakRule": 1, // Default, Always, Never
+    "AttributesTolerance": 0,
+    "NewlineExemptionElements": "",
+    "KeepFirstAttributeOnSameLine": true, // Start with tag-line
+    "SeparateByGroups": true,
+    "MaxAttributesPerLine": 0,
+    "MaxAttributeCharactersPerLine": 0,
+
+    // Special/Attributes/MarkupExtension
+    "FormatMarkupExtension": false,
+    "NoNewLineMarkupExtensions": "x:Bind, Binding",
+    // Special/Attributes/Thickness
+    "ThicknessAttributes": "Margin, Padding, BorderThickness, ThumbnailClipMargin",
+    "ThicknessSeparator": 2,
+
+    // Clearing/Elements
+    "RemoveEndingTagOfEmptyElement": true,
+    // Clearing/Attributes
+    "RemoveDesignTimeReferences": false,
+
+    // VSIX
+    "FormatOnSave": true
+}
