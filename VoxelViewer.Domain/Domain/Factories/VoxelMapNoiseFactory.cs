@@ -15,6 +15,7 @@
                 .Select( i => i.Staircase( 1f / 15 ) )
                 .Select( i => i.Pow( 1.5f ) )
                 .Select( i => i.ToInt() )
+                //.Mix()
                 .Select( i => (VoxelCell) i )
                 .ToArray2D( width, height );
             return new VoxelMap( width, height, cells );
@@ -48,6 +49,27 @@
         }
         private static int ToInt(this float value) {
             return (int) (value * VoxelCell.MaxValue);
+        }
+        // Helpers/Mix
+        private static IEnumerable<int> Mix(this IEnumerable<int> values) {
+            var table = CreateRandomTable();
+            foreach (var item in values) {
+                yield return table[ item ];
+            }
+        }
+        private static int[] CreateRandomTable() {
+            var rnd = new Random();
+            var table = Enumerable.Range( 0, 256 ).ToArray();
+            for (var i = 0; i < table.Length; i++) {
+                var i2 = rnd.Next( table.Length );
+                Swap( ref table[ i ], ref table[ i2 ] );
+            }
+            return table;
+        }
+        private static void Swap<T>(ref T a, ref T b) {
+            var tmp = a;
+            a = b;
+            b = tmp;
         }
 
 
