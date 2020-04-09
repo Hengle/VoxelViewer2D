@@ -32,8 +32,8 @@
         public override string ToString() {
             return $"VoxelCell: {Value}";
         }
-        public string ToString(Point2Int pos) {
-            return $"VoxelCell: {Value}, ({pos.X}, {pos.Y})";
+        public string ToString(Pointer pnt) {
+            return $"VoxelCell: {Value}, ({pnt.X}, {pnt.Y})";
         }
         // Utils/Operators
         public static bool operator ==(VoxelCell v1, VoxelCell v2) {

@@ -20,7 +20,7 @@
                 .Select( i => i.ToInt() )
                 .Select( i => (VoxelCell) i )
                 .ToArray2D( width, height );
-            return new VoxelMap( width, height, cells );
+            return new VoxelMap( cells, width, height );
         }
 
 

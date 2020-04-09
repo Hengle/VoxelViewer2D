@@ -5,46 +5,46 @@
 
     public class VoxelMap {
 
+        private VoxelCell[,] Cells { get; }
         public int Width { get; }
         public int Height { get; }
         public int Area { get; }
-        private VoxelCell[,] Cells { get; }
 
 
         public VoxelMap(int width, int height) {
+            Cells = new VoxelCell[ width, height ];
             (Width, Height, Area) = (width, height, width * height);
-            Cells = new VoxelCell[ Width, Height ];
         }
-        public VoxelMap(int width, int height, VoxelCell[,] cells) {
-            (Width, Height, Area) = (width, height, width * height);
+        public VoxelMap(VoxelCell[,] cells, int width, int height) {
+            Check( cells, width, height );
             Cells = cells;
-            if (Cells.GetLength( 0 ) != Width || Cells.GetLength( 1 ) != Height) throw new Exception( $"Cells is invalid: Actual={Cells.GetLength( 0 )}/{Cells.GetLength( 1 )}, Expected={Width}/{Height}" );
+            (Width, Height, Area) = (width, height, width * height);
         }
 
 
         // Get/Cell
-        public VoxelCell GetCell(Point2Int pos) {
-            return Cells[ pos.X, pos.Y ];
+        public VoxelCell GetCell(Pointer pnt) {
+            return Cells[ pnt.X, pnt.Y ];
         }
         // Get/Cells
-        public IEnumerable<(VoxelCell Value, Point2Int Pos)> GetCells() {
+        public IEnumerable<(VoxelCell Value, Pointer Pnt)> GetCells() {
             for (var y = 0; y < Height; y++) {
                 for (var x = 0; x < Width; x++) {
                     var cell = Cells[ x, y ];
-                    var pos = new Point2Int( x, y );
-                    yield return (cell, pos);
+                    var pnt = new Pointer( x, y );
+                    yield return (cell, pnt);
                 }
             }
         }
 
         // Set/Cell
-        public void SetCell(Point2Int pos, VoxelCell cell) {
-            Cells[ pos.X, pos.Y ] = cell;
+        public void SetCell(Pointer pnt, VoxelCell cell) {
+            Cells[ pnt.X, pnt.Y ] = cell;
         }
         // Set/Cell/IsChanged
-        public bool SetCellAndGetIsChanged(Point2Int pos, VoxelCell cell) {
-            var oldCell = Cells[ pos.X, pos.Y ];
-            Cells[ pos.X, pos.Y ] = cell;
+        public bool SetCellAndGetIsChanged(Pointer pnt, VoxelCell cell) {
+            var oldCell = Cells[ pnt.X, pnt.Y ];
+            Cells[ pnt.X, pnt.Y ] = cell;
             return oldCell != cell;
         }
 
@@ -61,6 +61,14 @@
         // Utils
         public override string ToString() {
             return $"VoxelMap: {Width}, {Height}";
+        }
+
+
+        // Helpers
+        private static void Check<T>(T[,] array, int length1, int length2) {
+            var actual = (array.GetLength( 0 ), array.GetLength( 1 ));
+            var expected = (length1, length2);
+            if (actual != expected) throw new Exception( $"Array is invalid: Actual={actual}, Expected={expected}" );
         }
 
 

@@ -32,45 +32,40 @@
         protected override void OnMouseDown(MouseButtonEventArgs e) {
             Focus();
             if (e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
-                var pos = Floor( e.GetPosition( this ) );
-                OnSetCell( pos );
+                OnSetCell( e.GetPosition( this ).ToPointer() );
                 e.Handled = true;
             }
             if (e.RightButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
-                var pos = Floor( e.GetPosition( this ) );
-                OnRemoveCell( pos );
+                OnRemoveCell( e.GetPosition( this ).ToPointer() );
                 e.Handled = true;
             }
             if (e.MiddleButton == MouseButtonState.Pressed) {
-                var pos = Floor( e.GetPosition( this ) );
-                OnPrintCell( pos );
+                OnPrintCell( e.GetPosition( this ).ToPointer() );
                 e.Handled = true;
             }
         }
         protected override void OnMouseMove(MouseEventArgs e) {
             if (e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
-                var pos = Floor( e.GetPosition( this ) );
-                OnSetCell( pos );
+                OnSetCell( e.GetPosition( this ).ToPointer() );
                 e.Handled = true;
             }
             if (e.RightButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl )) {
-                var pos = Floor( e.GetPosition( this ) );
-                OnRemoveCell( pos );
+                OnRemoveCell( e.GetPosition( this ).ToPointer() );
                 e.Handled = true;
             }
         }
         // Events/Mouse/VoxelMap
-        private void OnSetCell(Point2Int pos) {
-            var isChanged = Map.SetCellAndGetIsChanged( pos, VoxelCell.MaxValue );
+        private void OnSetCell(Pointer pnt) {
+            var isChanged = Map.SetCellAndGetIsChanged( pnt, VoxelCell.MaxValue );
             if (isChanged) InvalidateVisual();
         }
-        private void OnRemoveCell(Point2Int pos) {
-            var isChanged = Map.SetCellAndGetIsChanged( pos, VoxelCell.MinValue );
+        private void OnRemoveCell(Pointer pnt) {
+            var isChanged = Map.SetCellAndGetIsChanged( pnt, VoxelCell.MinValue );
             if (isChanged) InvalidateVisual();
         }
-        private void OnPrintCell(Point2Int pos) {
-            var cell = Map.GetCell( pos );
-            Trace.WriteLine( cell.ToString( pos ) );
+        private void OnPrintCell(Pointer pnt) {
+            var cell = Map.GetCell( pnt );
+            Trace.WriteLine( cell.ToString( pnt ) );
         }
 
 
@@ -138,11 +133,6 @@
             if (i % 4 == 0) return new Pen( Brushes.Blue, 0.02 / 5 );
             if (i % 2 == 0) return new Pen( Brushes.Blue, 0.02 / 25 );
             return default;
-        }
-
-        // Helpers/Math
-        private static Point2Int Floor(Point point) {
-            return new Point2Int( (int) Math.Floor( point.X ), (int) Math.Floor( point.Y ) );
         }
 
 

@@ -116,9 +116,9 @@
       <Project>{f75cbc23-7d0b-4409-9164-166d8c5b3f59}</Project>
       <Name>VoxelViewer2D.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VoxelViewer.Presentation\VoxelViewer2D.Presentation.csproj">
+    <ProjectReference Include="..\VoxelViewer.Presentation\1_VoxelViewer2D.Presentation.csproj">
       <Project>{cfbc2905-3d3a-4c32-836f-dc413cb8eb02}</Project>
-      <Name>VoxelViewer2D.Presentation</Name>
+      <Name>1_VoxelViewer2D.Presentation</Name>
     </ProjectReference>
     <ProjectReference Include="..\VoxelViewer2D.Application\VoxelViewer2D.Application.csproj">
       <Project>{14db0a2a-45c9-4730-988c-78c0115be24c}</Project>

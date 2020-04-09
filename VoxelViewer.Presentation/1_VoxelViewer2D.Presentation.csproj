@@ -74,6 +74,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="System.Windows\PointExtensions.cs" />
     <Compile Include="System.Windows\Snapshot.cs" />
     <Page Include="Presentation.Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -118,13 +119,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VoxelViewer.Domain\VoxelViewer2D.Domain.csproj">
+    <ProjectReference Include="..\VoxelViewer.Domain\3_VoxelViewer2D.Domain.csproj">
       <Project>{f75cbc23-7d0b-4409-9164-166d8c5b3f59}</Project>
-      <Name>VoxelViewer2D.Domain</Name>
+      <Name>3_VoxelViewer2D.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VoxelViewer2D.Application\VoxelViewer2D.Application.csproj">
+    <ProjectReference Include="..\VoxelViewer2D.Application\2_VoxelViewer2D.Application.csproj">
       <Project>{14db0a2a-45c9-4730-988c-78c0115be24c}</Project>
-      <Name>VoxelViewer2D.Application</Name>
+      <Name>2_VoxelViewer2D.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VoxelViewer2D.Domain.Extensions\3_VoxelViewer2D.Domain.Extensions.csproj">
+      <Project>{134d416e-70e5-4e6b-b0cf-42901fce64b7}</Project>
+      <Name>3_VoxelViewer2D.Domain.Extensions</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -132,11 +137,6 @@
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.3.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\Images\Image 1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
