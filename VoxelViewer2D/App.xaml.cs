@@ -5,7 +5,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using VoxelViewer2D.Domain;
 
-    public partial class App : Application {
+    public partial class App : System.Windows.Application {
 
         public static new App Current { get; private set; }
         public ServiceProvider Container { get; private set; }

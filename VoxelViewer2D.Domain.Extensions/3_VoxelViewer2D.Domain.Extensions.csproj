@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>VoxelViewer2D</RootNamespace>
+    <AssemblyName>VoxelViewer2D.Domain.Extensions</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
