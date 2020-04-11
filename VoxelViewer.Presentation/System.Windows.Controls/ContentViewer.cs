@@ -19,9 +19,14 @@
         private ScaleTransform ContentScaleTransform => ContentTransform.Children.OfType<ScaleTransform>().First();
 
 
+        static ContentViewer() {
+            Control.BackgroundProperty.OverrideMetadata( typeof( ContentViewer ), new FrameworkPropertyMetadata( Brushes.Transparent ) );
+            UIElement.ClipToBoundsProperty.OverrideMetadata( typeof( ContentViewer ), new FrameworkPropertyMetadata( true ) );
+        }
+
+
         // Events/Mouse
         protected override void OnMouseDown(MouseButtonEventArgs e) {
-            Content.Focus();
             if (IsPressed( e ) && !IsMouseCaptured) {
                 prevMousePosition = e.GetPosition( this );
                 CaptureMouse();
@@ -41,7 +46,7 @@
             }
         }
         protected override void OnMouseWheel(MouseWheelEventArgs e) {
-            if (IsPressed( e )) {
+            if (IsPressed( e ) && IsMouseCaptured) {
                 OnScale( e.GetPosition( this ), e.Delta );
                 e.Handled = true;
             }
@@ -50,13 +55,13 @@
         private void OnTranslate(Point position, ref Point prev) {
             var delta = position - prev;
             Translate( ContentTranslateTransform, delta );
-            Content.InvalidateArrange();
+            Content.InvalidateMeasure();
             prev = position;
         }
         private void OnScale(Point position, double delta) {
             var factor = (delta > 0) ? 1.1 : 0.9;
             ScaleAt( ContentTranslateTransform, ContentScaleTransform, position, factor );
-            Content.InvalidateArrange();
+            Content.InvalidateMeasure();
         }
 
 

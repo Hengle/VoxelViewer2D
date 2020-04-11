@@ -74,6 +74,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Presentation.Views\VoxelMapCanvas.cs" />
     <Compile Include="System.Windows\PointExtensions.cs" />
     <Compile Include="System.Windows\Snapshot.cs" />
     <Page Include="Presentation.Views\MainWindow.xaml">

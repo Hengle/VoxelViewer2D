@@ -27,7 +27,7 @@
             return Value.GetHashCode();
         }
         public override string ToString() {
-            return $"Pointer: {Value}";
+            return $"({X}, {Y})";
         }
         // Utils/Operators
         public static bool operator ==(Pointer v1, Pointer v2) {

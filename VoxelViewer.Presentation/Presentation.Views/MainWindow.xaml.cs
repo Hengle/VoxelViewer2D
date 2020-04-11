@@ -14,7 +14,7 @@
 
         // Events/Menu
         private void OnSnapshotClick(object sender, RoutedEventArgs e) {
-            Snapshot.TakeSnapshot( VoxelMapView, 10 );
+            Snapshot.TakeSnapshot( VoxelMapCanvas, 20 );
             e.Handled = true;
         }
         private void OnHelpClick(object sender, RoutedEventArgs e) {
@@ -24,7 +24,6 @@
             builder.AppendLine();
             builder.AppendLine( "Add Cell Value - Left Mouse Button + Left Ctrl" );
             builder.AppendLine( "Remove Cell Value - Right Mouse Button + Left Ctrl" );
-            builder.AppendLine( "Print Cell Info - Middle Mouse Button" );
             builder.AppendLine( "Clear - C" );
             MessageBox.Show( builder.ToString(), "Help", MessageBoxButton.OK, MessageBoxImage.Information );
             e.Handled = true;

@@ -24,10 +24,10 @@
 
 
         // Helpers/UIElement
-        private static BitmapSource GetSnapshot(UIElement control, double width, double height) {
+        private static BitmapSource GetSnapshot(UIElement element, double width, double height) {
             var visual = new DrawingVisual();
             using (var context = visual.RenderOpen()) {
-                var brush = new VisualBrush( control );
+                var brush = new VisualBrush( element );
                 context.DrawRectangle( brush, null, new Rect( 0, 0, width, height ) );
             }
             var bitmap = new RenderTargetBitmap( (int) Math.Ceiling( width ), (int) Math.Ceiling( height ), 96, 96, PixelFormats.Pbgra32 );
