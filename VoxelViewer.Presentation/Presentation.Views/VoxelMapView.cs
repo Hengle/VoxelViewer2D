@@ -1,11 +1,8 @@
 ﻿namespace VoxelViewer2D.Presentation.Views {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics;
     using System.Globalization;
     using System.Text;
-    using System.Text.RegularExpressions;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -16,14 +13,11 @@
     // Note: UserControl allows to use background
     public class VoxelMapView : UserControl {
 
-        private Pointer pointer;
-        private bool IsInDesignMode => DesignerProperties.GetIsInDesignMode( this );
-        private bool IsInWindowMode => !DesignerProperties.GetIsInDesignMode( this );
-        private new bool IsMouseCaptured => Mouse.Captured != null;
         private VoxelMap Map { get; set; }
         private VoxelMapCanvas Canvas { get; set; }
+        private Pointer Pointer => Mouse.GetPosition( Canvas ).ToPointer();
         private string MapInfo => Map?.ToString();
-        private string CellInfo => (Map?.SafeGetCell( pointer ) ?? default).ToString( pointer );
+        private string CellInfo => (Map?.SafeGetCell( Pointer ) ?? default).ToString( Pointer );
 
 
         static VoxelMapView() {
@@ -35,47 +29,75 @@
         // Events/Init
         protected override void OnInitialized(EventArgs e) {
             base.OnInitialized( e );
-            if (IsInWindowMode) {
-                Map = App.Current.Container.GetRequiredService<VoxelMap>();
-                Canvas = (VoxelMapCanvas) LogicalTreeHelper.FindLogicalNode( this, "VoxelMapCanvas" );
-                Canvas.Source = Map;
-            }
+            Map = App.Current?.Container.GetRequiredService<VoxelMap>();
+            Canvas = (VoxelMapCanvas) LogicalTreeHelper.FindLogicalNode( this, "VoxelMapCanvas" );
+            Canvas.Source = Map;
+            AddHandler( UIElement.MouseDownEvent, (MouseButtonEventHandler) OnMouseDown, true );
+            AddHandler( UIElement.MouseMoveEvent, (MouseEventHandler) OnMouseMove, true );
         }
 
 
         // Events/Mouse
-        protected override void OnPreviewMouseDown(MouseButtonEventArgs e) {
+        protected override void OnMouseDown(MouseButtonEventArgs e) {
+            if (IsLeftPressed( e )) {
+                OnSetCell( e.GetPosition( Canvas ).ToPointer() );
+                e.Handled = true;
+            }
+            if (IsRightPressed( e )) {
+                OnClearCell( e.GetPosition( Canvas ).ToPointer() );
+                e.Handled = true;
+            }
+        }
+        protected override void OnMouseMove(MouseEventArgs e) {
+            if (IsLeftPressed( e )) {
+                OnSetCell( e.GetPosition( Canvas ).ToPointer() );
+                e.Handled = true;
+            }
+            if (IsRightPressed( e )) {
+                OnClearCell( e.GetPosition( Canvas ).ToPointer() );
+                e.Handled = true;
+            }
+        }
+        // Events/Mouse/Handled
+        private void OnMouseDown(object sender, MouseButtonEventArgs e) {
             Focus();
-            {
-                OnCellInfo( e.GetPosition( Canvas ).ToPointer() );
-            }
-            if (IsLeftPressed( e )) {
-                OnSetCell( e.GetPosition( Canvas ).ToPointer() );
-                e.Handled = true;
-            }
-            if (IsRightPressed( e )) {
-                OnClearCell( e.GetPosition( Canvas ).ToPointer() );
-                e.Handled = true;
-            }
-        }
-        protected override void OnPreviewMouseMove(MouseEventArgs e) {
-            {
-                OnCellInfo( e.GetPosition( Canvas ).ToPointer() );
-            }
-            if (IsLeftPressed( e )) {
-                OnSetCell( e.GetPosition( Canvas ).ToPointer() );
-                e.Handled = true;
-            }
-            if (IsRightPressed( e )) {
-                OnClearCell( e.GetPosition( Canvas ).ToPointer() );
-                e.Handled = true;
-            }
-        }
-        // Events/Mouse/VoxelMap
-        private void OnCellInfo(Pointer pnt) {
-            pointer = pnt;
             InvalidateVisual();
         }
+        private void OnMouseMove(object sender, MouseEventArgs e) {
+            Focus();
+            InvalidateVisual();
+        }
+        // Events/Keyboard
+        protected override void OnKeyDown(KeyEventArgs e) {
+            if (e.Key == Key.LeftCtrl) {
+                CaptureMouse();
+                e.Handled = true;
+            }
+            if (e.Key == Key.C) {
+                OnClear();
+                e.Handled = true;
+            }
+        }
+        protected override void OnKeyUp(KeyEventArgs e) {
+            if (e.Key == Key.LeftCtrl) {
+                ReleaseMouseCapture();
+                e.Handled = true;
+            }
+        }
+
+
+        // Events/Capture
+        protected override void OnGotMouseCapture(MouseEventArgs e) {
+            Cursor = Cursors.Cross;
+            e.Handled = true;
+        }
+        protected override void OnLostMouseCapture(MouseEventArgs e) {
+            Cursor = null;
+            e.Handled = true;
+        }
+
+
+        // Events/VoxelMapView
         private void OnSetCell(Pointer pnt) {
             var isChanged = Map.SafeChangeCell( pnt, VoxelCell.MaxValue );
             if (isChanged) Canvas.InvalidateVisual();
@@ -84,16 +106,6 @@
             var isChanged = Map.SafeChangeCell( pnt, VoxelCell.MinValue );
             if (isChanged) Canvas.InvalidateVisual();
         }
-
-
-        // Events/Keyboard
-        protected override void OnKeyDown(KeyEventArgs e) {
-            if (e.Key == Key.C) {
-                OnClear();
-                e.Handled = true;
-            }
-        }
-        // Events/Keyboard/VoxelMap
         private void OnClear() {
             Map.Clear();
             Canvas.InvalidateVisual();
@@ -107,11 +119,11 @@
 
 
         // Helpers/Mouse
-        private static bool IsLeftPressed(MouseEventArgs e) {
-            return e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl );
+        private bool IsLeftPressed(MouseEventArgs e) {
+            return e.LeftButton == MouseButtonState.Pressed && IsMouseCaptured;
         }
-        private static bool IsRightPressed(MouseEventArgs e) {
-            return e.RightButton == MouseButtonState.Pressed && Keyboard.IsKeyDown( Key.LeftCtrl );
+        private bool IsRightPressed(MouseEventArgs e) {
+            return e.RightButton == MouseButtonState.Pressed && IsMouseCaptured;
         }
         // Helpers/Draw
         private void DrawLabel(DrawingContext context, Brush brush, Point origin, double size, params string[] text) {

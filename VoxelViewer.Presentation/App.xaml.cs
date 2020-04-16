@@ -8,16 +8,11 @@
 
     public partial class App : System.Windows.Application {
 
-        public static new App Current { get; private set; }
+        public static new App Current => System.Windows.Application.Current as App;
         public ServiceProvider Container { get; private set; }
 
 
-        public App() {
-            Current = this;
-        }
-
-
-        // Events
+        // Events/Init
         protected override void OnStartup(StartupEventArgs e) {
             var services = new ServiceCollection();
             services.AddSingleton( VoxelMapNoiseFactory.Create( 128, 64 ) );
@@ -25,7 +20,6 @@
             //services.AddSingleton( VoxelMapBitmapFactory.Create( VoxelViewer2D.Properties.Resources.Image_1 ) );
             Container = services.BuildServiceProvider();
         }
-
         protected override void OnExit(ExitEventArgs e) {
             Container.Dispose();
         }
