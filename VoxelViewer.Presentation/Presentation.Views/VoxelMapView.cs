@@ -21,8 +21,8 @@
 
 
         static VoxelMapView() {
-            UIElement.FocusableProperty.OverrideMetadata( typeof( VoxelMapView ), new FrameworkPropertyMetadata( true ) );
-            KeyboardNavigation.IsTabStopProperty.OverrideMetadata( typeof( VoxelMapView ), new FrameworkPropertyMetadata( true ) );
+            //UIElement.FocusableProperty.OverrideMetadata( typeof( VoxelMapView ), new FrameworkPropertyMetadata( true ) );
+            //KeyboardNavigation.IsTabStopProperty.OverrideMetadata( typeof( VoxelMapView ), new FrameworkPropertyMetadata( true ) );
         }
 
 
@@ -88,7 +88,7 @@
 
         // Events/Capture
         protected override void OnGotMouseCapture(MouseEventArgs e) {
-            Cursor = Cursors.Cross;
+            Cursor = Cursors.Pen;
             e.Handled = true;
         }
         protected override void OnLostMouseCapture(MouseEventArgs e) {
@@ -113,9 +113,9 @@
 
 
         // Events/OnRender
-        protected override void OnRender(DrawingContext context) {
-            DrawLabel( context, Brushes.Red, new Point( 2, 2 ), 12, MapInfo, CellInfo );
-        }
+        //protected override void OnRender(DrawingContext context) {
+        //    DrawLabel( context, Brushes.Red, new Point( 2, 2 ), 12, MapInfo, CellInfo );
+        //}
 
 
         // Helpers/Mouse

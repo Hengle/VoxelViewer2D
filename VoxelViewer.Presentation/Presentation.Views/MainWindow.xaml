@@ -9,7 +9,7 @@
         Title="Voxel Viewer 2D"
         Width="1600"
         Height="800"
-        FocusManager.FocusedElement="{Binding ElementName=VoxelMapView}"
+        FocusManager.FocusedElement="{Binding ElementName=VoxelMapCanvas}"
         mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -24,19 +24,18 @@
                 <MenuItem Header="Help" Click="OnHelpClick" />
             </MenuItem>
         </Menu>
-        <Views:VoxelMapView x:Name="VoxelMapView" Grid.Row="1">
-            <Controls:ContentViewer>
-                <Views:VoxelMapCanvas x:Name="VoxelMapCanvas" Width="64" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <Views:VoxelMapCanvas.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform ScaleX="10" ScaleY="10" />
-                            <SkewTransform />
-                            <RotateTransform />
-                            <TranslateTransform />
-                        </TransformGroup>
-                    </Views:VoxelMapCanvas.RenderTransform>
-                </Views:VoxelMapCanvas>
-            </Controls:ContentViewer>
-        </Views:VoxelMapView>
+        <Controls:ContentViewer Background="Gray" Grid.Row="1">
+            <Views:VoxelMapView HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0">
+                <Views:VoxelMapView.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="8" ScaleY="8" />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Views:VoxelMapView.RenderTransform>
+                <Views:VoxelMapCanvas x:Name="VoxelMapCanvas" Width="64" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top" Focusable="True" />
+            </Views:VoxelMapView>
+        </Controls:ContentViewer>
     </Grid>
 </Window>
