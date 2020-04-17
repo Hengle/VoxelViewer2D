@@ -14,16 +14,16 @@
 
         // Events/Menu
         private void OnSnapshotClick(object sender, RoutedEventArgs e) {
-            Snapshot.TakeSnapshot( VoxelMapCanvas, 20 );
+            Snapshot.TakeSnapshot( VoxelMapView, 20 );
             e.Handled = true;
         }
         private void OnHelpClick(object sender, RoutedEventArgs e) {
             var builder = new StringBuilder();
-            builder.AppendLine( "Translate - Mouse Move + Left/Right Mouse Button" );
-            builder.AppendLine( "Zoom - Mouse Wheel + Left/Right Mouse Button" );
+            builder.AppendLine( "Translate - Mouse + LMB/RMB" );
+            builder.AppendLine( "Zoom - Scroll + LMB/RMB" );
             builder.AppendLine();
-            builder.AppendLine( "Add Cell Value - Left Mouse Button + Left Ctrl" );
-            builder.AppendLine( "Remove Cell Value - Right Mouse Button + Left Ctrl" );
+            builder.AppendLine( "Add Cell Value - LMB + Left Ctrl" );
+            builder.AppendLine( "Remove Cell Value - RMB + Left Ctrl" );
             builder.AppendLine( "Clear - C" );
             MessageBox.Show( builder.ToString(), "Help", MessageBoxButton.OK, MessageBoxImage.Information );
             e.Handled = true;

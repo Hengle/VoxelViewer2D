@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Presentation.Views\" />
+    <Folder Include="Application.ViewModels\" />
+    <Folder Include="Application.Views\" />
+    <Folder Include="Application\" />
   </ItemGroup>
 
   <ItemGroup>

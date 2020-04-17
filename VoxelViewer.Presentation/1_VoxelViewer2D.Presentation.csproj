@@ -74,7 +74,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Presentation.Views\VoxelMapCanvas.cs" />
+    <Compile Include="Presentation.Views\VoxelMapView.cs" />
     <Compile Include="System.Windows\PointExtensions.cs" />
     <Compile Include="System.Windows\Snapshot.cs" />
     <Page Include="Presentation.Views\MainWindow.xaml">
@@ -92,7 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="System.Windows.Controls\ContentViewer.cs" />
-    <Compile Include="Presentation.Views\VoxelMapView.cs" />
+    <Compile Include="Presentation.Views\VoxelMapEditorView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

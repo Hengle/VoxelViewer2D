@@ -1,145 +1,85 @@
 ﻿namespace VoxelViewer2D.Presentation.Views {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
+    using System.Linq;
     using System.Text;
     using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Input;
     using System.Windows.Media;
-    using Microsoft.Extensions.DependencyInjection;
     using VoxelViewer2D.Domain;
 
-    // Note: UserControl allows to use background
-    public class VoxelMapView : UserControl {
+    public class VoxelMapView : FrameworkElement {
 
-        private VoxelMap Map { get; set; }
-        private VoxelMapCanvas Canvas { get; set; }
-        private Pointer Pointer => Mouse.GetPosition( Canvas ).ToPointer();
-        private string MapInfo => Map?.ToString();
-        private string CellInfo => (Map?.SafeGetCell( Pointer ) ?? default).ToString( Pointer );
+        public static readonly DependencyProperty SourceProperty;
+
+        public VoxelMap Source {
+            get => (VoxelMap) GetValue( SourceProperty );
+            set => SetValue( SourceProperty, value );
+        }
 
 
         static VoxelMapView() {
-            //UIElement.FocusableProperty.OverrideMetadata( typeof( VoxelMapView ), new FrameworkPropertyMetadata( true ) );
-            //KeyboardNavigation.IsTabStopProperty.OverrideMetadata( typeof( VoxelMapView ), new FrameworkPropertyMetadata( true ) );
+            UIElement.FocusableProperty.OverrideMetadata( typeof( VoxelMapView ), new FrameworkPropertyMetadata( true ) );
+            var sourceMetadata = new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, OnSourceChanged, null );
+            SourceProperty = DependencyProperty.Register( nameof( Source ), typeof( VoxelMap ), typeof( VoxelMapView ), sourceMetadata, null );
         }
 
 
-        // Events/Init
-        protected override void OnInitialized(EventArgs e) {
-            base.OnInitialized( e );
-            Map = App.Current?.Container.GetRequiredService<VoxelMap>();
-            Canvas = (VoxelMapCanvas) LogicalTreeHelper.FindLogicalNode( this, "VoxelMapCanvas" );
-            Canvas.Source = Map;
-            AddHandler( UIElement.MouseDownEvent, (MouseButtonEventHandler) OnMouseDown, true );
-            AddHandler( UIElement.MouseMoveEvent, (MouseEventHandler) OnMouseMove, true );
+        // Events/DependencyProperty
+        private static void OnSourceChanged(DependencyObject obj, DependencyPropertyChangedEventArgs evt) {
+            var value = (VoxelMap) evt.NewValue;
+            ((VoxelMapView) obj).Width = value.Width;
+            ((VoxelMapView) obj).Height = value.Height;
         }
 
-
-        // Events/Mouse
-        protected override void OnMouseDown(MouseButtonEventArgs e) {
-            if (IsLeftPressed( e )) {
-                OnSetCell( e.GetPosition( Canvas ).ToPointer() );
-                e.Handled = true;
-            }
-            if (IsRightPressed( e )) {
-                OnClearCell( e.GetPosition( Canvas ).ToPointer() );
-                e.Handled = true;
-            }
-        }
-        protected override void OnMouseMove(MouseEventArgs e) {
-            if (IsLeftPressed( e )) {
-                OnSetCell( e.GetPosition( Canvas ).ToPointer() );
-                e.Handled = true;
-            }
-            if (IsRightPressed( e )) {
-                OnClearCell( e.GetPosition( Canvas ).ToPointer() );
-                e.Handled = true;
-            }
-        }
-        // Events/Mouse/Handled
-        private void OnMouseDown(object sender, MouseButtonEventArgs e) {
-            Focus();
-            InvalidateVisual();
-        }
-        private void OnMouseMove(object sender, MouseEventArgs e) {
-            Focus();
-            InvalidateVisual();
-        }
-        // Events/Keyboard
-        protected override void OnKeyDown(KeyEventArgs e) {
-            if (e.Key == Key.LeftCtrl) {
-                CaptureMouse();
-                e.Handled = true;
-            }
-            if (e.Key == Key.C) {
-                OnClear();
-                e.Handled = true;
-            }
-        }
-        protected override void OnKeyUp(KeyEventArgs e) {
-            if (e.Key == Key.LeftCtrl) {
-                ReleaseMouseCapture();
-                e.Handled = true;
+        // Events/Render
+        protected override void OnRender(DrawingContext context) {
+            if (Source == null) {
+                context.DrawRectangle( Brushes.Pink, null, new Rect( 0, 0, ActualWidth, ActualHeight ) );
+            } else {
+                context.PushGuidelineSet( GetGuidelines( Source.Width, Source.Height ) );
+                Draw( context, Source );
+                DrawGrid( context, Source.Width, Source.Height );
+                context.Pop();
             }
         }
 
 
-        // Events/Capture
-        protected override void OnGotMouseCapture(MouseEventArgs e) {
-            Cursor = Cursors.Pen;
-            e.Handled = true;
-        }
-        protected override void OnLostMouseCapture(MouseEventArgs e) {
-            Cursor = null;
-            e.Handled = true;
-        }
-
-
-        // Events/VoxelMapView
-        private void OnSetCell(Pointer pnt) {
-            var isChanged = Map.SafeChangeCell( pnt, VoxelCell.MaxValue );
-            if (isChanged) Canvas.InvalidateVisual();
-        }
-        private void OnClearCell(Pointer pnt) {
-            var isChanged = Map.SafeChangeCell( pnt, VoxelCell.MinValue );
-            if (isChanged) Canvas.InvalidateVisual();
-        }
-        private void OnClear() {
-            Map.Clear();
-            Canvas.InvalidateVisual();
-        }
-
-
-        // Events/OnRender
-        //protected override void OnRender(DrawingContext context) {
-        //    DrawLabel( context, Brushes.Red, new Point( 2, 2 ), 12, MapInfo, CellInfo );
-        //}
-
-
-        // Helpers/Mouse
-        private bool IsLeftPressed(MouseEventArgs e) {
-            return e.LeftButton == MouseButtonState.Pressed && IsMouseCaptured;
-        }
-        private bool IsRightPressed(MouseEventArgs e) {
-            return e.RightButton == MouseButtonState.Pressed && IsMouseCaptured;
-        }
         // Helpers/Draw
-        private void DrawLabel(DrawingContext context, Brush brush, Point origin, double size, params string[] text) {
-            var text_ = string.Join( Environment.NewLine, text );
-            DrawLabel( context, brush, origin, size, text_ );
+        private static void Draw(DrawingContext context, VoxelMap map) {
+            foreach (var (item, pnt) in map.GetIterator()) {
+                var brush = GetBrush( item.Value01 );
+                context.DrawRectangle( brush, null, new Rect( pnt.X, pnt.Y, 1, 1 ) );
+            }
         }
-        private void DrawLabel(DrawingContext context, Brush brush, Point origin, double size, string text) {
-            var text_ = new FormattedText(
-                    text,
-                    CultureInfo.CurrentUICulture,
-                    FlowDirection.LeftToRight,
-                    new Typeface( "Arial" ),
-                    size,
-                    brush,
-                    VisualTreeHelper.GetDpi( this ).PixelsPerDip );
-            context.DrawText( text_, origin );
+        private static void DrawGrid(DrawingContext context, int width, int height) {
+            for (var y = 0; y <= height; y += 2) {
+                var pen = GetPen( y );
+                context.DrawLine( pen, new Point( 0, y ), new Point( width, y ) );
+            }
+            for (var x = 0; x <= width; x += 2) {
+                var pen = GetPen( x );
+                context.DrawLine( pen, new Point( x, 0 ), new Point( x, height ) );
+            }
+        }
+        // Helpers/Draw/Utils
+        private static GuidelineSet GetGuidelines(int width, int height) {
+            return (GuidelineSet) new GuidelineSet() {
+                GuidelinesX = new DoubleCollection( Enumerable.Range( 0, width ).Select( a => (double) a ) ),
+                GuidelinesY = new DoubleCollection( Enumerable.Range( 0, height ).Select( a => (double) a ) ),
+            }.GetAsFrozen();
+        }
+        private static Brush GetBrush(float value) {
+            if (value < 0) return Brushes.Blue;
+            if (value > 1) return Brushes.Red;
+            var brush = new SolidColorBrush( Color.FromScRgb( 1, value, value, value ) );
+            brush.Freeze();
+            return brush;
+        }
+        private static Pen GetPen(int i) {
+            if (i % 8 == 0) return new Pen( Brushes.Blue, 0.02 );
+            if (i % 4 == 0) return new Pen( Brushes.Blue, 0.02 / 5 );
+            if (i % 2 == 0) return new Pen( Brushes.Blue, 0.02 / 25 );
+            return default;
         }
 
 

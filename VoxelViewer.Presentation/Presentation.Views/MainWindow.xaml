@@ -4,12 +4,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:System.Windows.Controls"
         xmlns:Views="clr-namespace:VoxelViewer2D.Presentation.Views"
-        xmlns:ViewModels="clr-namespace:VoxelViewer2D.Application.ViewModels;assembly=VoxelViewer2D.Application"
         x:Class="VoxelViewer2D.Presentation.Views.MainWindow"
         Title="Voxel Viewer 2D"
         Width="1600"
         Height="800"
-        FocusManager.FocusedElement="{Binding ElementName=VoxelMapCanvas}"
+        FocusManager.FocusedElement="{Binding ElementName=VoxelMapView}"
         mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -25,17 +24,17 @@
             </MenuItem>
         </Menu>
         <Controls:ContentViewer Background="Gray" Grid.Row="1">
-            <Views:VoxelMapView HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0">
-                <Views:VoxelMapView.RenderTransform>
+            <Views:VoxelMapEditorView HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0">
+                <Views:VoxelMapEditorView.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="8" ScaleY="8" />
                         <SkewTransform />
                         <RotateTransform />
                         <TranslateTransform />
                     </TransformGroup>
-                </Views:VoxelMapView.RenderTransform>
-                <Views:VoxelMapCanvas x:Name="VoxelMapCanvas" Width="64" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top" Focusable="True" />
-            </Views:VoxelMapView>
+                </Views:VoxelMapEditorView.RenderTransform>
+                <Views:VoxelMapView x:Name="VoxelMapView" Width="64" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            </Views:VoxelMapEditorView>
         </Controls:ContentViewer>
     </Grid>
 </Window>
