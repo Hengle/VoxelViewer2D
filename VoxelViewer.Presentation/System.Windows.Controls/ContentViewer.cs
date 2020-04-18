@@ -12,17 +12,23 @@
     // Note: CaptureMouse() raises OnMouseMove event
     public class ContentViewer : UserControl {
 
-        private new UIElement Content => (UIElement) base.Content;
-        private TransformGroup ContentTransform => (TransformGroup) Content.RenderTransform;
-        private TranslateTransform ContentTranslateTransform => ContentTransform.Children.OfType<TranslateTransform>().First();
-        private ScaleTransform ContentScaleTransform => ContentTransform.Children.OfType<ScaleTransform>().First();
-        private Point OriginPositionOnContent { get; set; }
-        private Point OriginPosition => PointFromScreen( Content.PointToScreen( OriginPositionOnContent ) );
+        public static readonly DependencyProperty TargetProperty;
+
+        public UIElement Target {
+            get => (UIElement) GetValue( TargetProperty );
+            set => SetValue( TargetProperty, value );
+        }
+        private TransformGroup TargetTransform => (TransformGroup) Target.RenderTransform;
+        private TranslateTransform TargetTranslateTransform => TargetTransform.Children.OfType<TranslateTransform>().First();
+        private ScaleTransform TargetScaleTransform => TargetTransform.Children.OfType<ScaleTransform>().First();
+        private Point OriginPositionOnTarget { get; set; }
+        private Point OriginPosition => PointFromScreen( Target.PointToScreen( OriginPositionOnTarget ) );
 
 
         static ContentViewer() {
             Control.BackgroundProperty.OverrideMetadata( typeof( ContentViewer ), new FrameworkPropertyMetadata( Brushes.Transparent ) );
             UIElement.ClipToBoundsProperty.OverrideMetadata( typeof( ContentViewer ), new FrameworkPropertyMetadata( true ) );
+            TargetProperty = DependencyProperty.Register( nameof( Target ), typeof( UIElement ), typeof( ContentViewer ), new PropertyMetadata(), null );
         }
 
 
@@ -65,7 +71,7 @@
 
         // Events/Capture
         protected override void OnGotMouseCapture(MouseEventArgs e) {
-            OriginPositionOnContent = e.GetPosition( Content );
+            OriginPositionOnTarget = e.GetPosition( Target );
             Cursor = Cursors.SizeAll;
             e.Handled = true;
         }
@@ -78,13 +84,13 @@
         // Events/ContentViewer
         private void OnTranslate(Point position, Point origin) {
             var delta = position - origin;
-            Translate( ContentTranslateTransform, delta );
-            Content.InvalidateMeasure();
+            Translate( TargetTranslateTransform, delta );
+            Target.InvalidateMeasure();
         }
         private void OnScale(Point position, double delta) {
             var factor = (delta > 0) ? 1.1 : 0.9;
-            ScaleAt( ContentTranslateTransform, ContentScaleTransform, position, factor );
-            Content.InvalidateMeasure();
+            ScaleAt( TargetTranslateTransform, TargetScaleTransform, position, factor );
+            Target.InvalidateMeasure();
         }
 
 

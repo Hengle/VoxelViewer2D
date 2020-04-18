@@ -23,17 +23,18 @@
                 <MenuItem Header="Help" Click="OnHelpClick" />
             </MenuItem>
         </Menu>
-        <Controls:ContentViewer Background="Gray" Grid.Row="1">
-            <Views:VoxelMapEditorView HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,0">
-                <Views:VoxelMapEditorView.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform ScaleX="8" ScaleY="8" />
-                        <SkewTransform />
-                        <RotateTransform />
-                        <TranslateTransform />
-                    </TransformGroup>
-                </Views:VoxelMapEditorView.RenderTransform>
-                <Views:VoxelMapView x:Name="VoxelMapView" Width="64" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Controls:ContentViewer Target="{Binding ElementName=VoxelMapView}" Grid.Row="1">
+            <Views:VoxelMapEditorView Background="Gray">
+                <Views:VoxelMapView x:Name="VoxelMapView" Width="64" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Views:VoxelMapView.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="8" ScaleY="8" />
+                            <SkewTransform />
+                            <RotateTransform />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </Views:VoxelMapView.RenderTransform>
+                </Views:VoxelMapView>
             </Views:VoxelMapEditorView>
         </Controls:ContentViewer>
     </Grid>

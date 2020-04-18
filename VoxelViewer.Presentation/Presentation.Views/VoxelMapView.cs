@@ -24,12 +24,20 @@
         }
 
 
+        // Events/Init
+        protected override void OnInitialized(EventArgs e) {
+            base.OnInitialized( e );
+            FocusVisualStyle = null;
+        }
+
+
         // Events/DependencyProperty
         private static void OnSourceChanged(DependencyObject obj, DependencyPropertyChangedEventArgs evt) {
             var value = (VoxelMap) evt.NewValue;
             ((VoxelMapView) obj).Width = value.Width;
             ((VoxelMapView) obj).Height = value.Height;
         }
+
 
         // Events/Render
         protected override void OnRender(DrawingContext context) {
