@@ -14,9 +14,9 @@
         private static string PathToSave { get; } = $"D:/{AppName}/Snapshot.png";
 
 
-        public static void TakeSnapshot(UIElement control, double scale) {
-            var size = (Vector) control.RenderSize * scale;
-            var bitmap = GetSnapshot( control, size.X, size.Y );
+        public static void TakeSnapshot(UIElement element, double scale) {
+            var size = (Vector) element.RenderSize * scale;
+            var bitmap = GetSnapshot( element, size.X, size.Y );
             var path = GetUniquePath( PathToSave );
             SaveBitmap( bitmap, path );
             Trace.WriteLine( $"Snapshot is saved: Width={bitmap.Width}, Height={bitmap.Height}, Path={path}" );
