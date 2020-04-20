@@ -6,13 +6,14 @@
     using Microsoft.Extensions.DependencyInjection;
     using VoxelViewer2D.Domain;
 
-    public partial class App : System.Windows.Application {
+    public partial class App : System.Windows.Application, IContainerProvider {
 
         public IServiceProvider Container { get; set; }
 
 
         // Events/Init
         protected override void OnStartup(StartupEventArgs e) {
+
             Container = CreateContainer();
         }
         protected override void OnExit(ExitEventArgs e) {

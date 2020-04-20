@@ -112,21 +112,21 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VoxelViewer2D.Application\2_VoxelViewer2D.Application.csproj">
+      <Project>{14db0a2a-45c9-4730-988c-78c0115be24c}</Project>
+      <Name>2_VoxelViewer2D.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VoxelViewer2D.Domain\3_VoxelViewer2D.Domain.csproj">
       <Project>{f75cbc23-7d0b-4409-9164-166d8c5b3f59}</Project>
       <Name>VoxelViewer2D.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VoxelViewer2D.Presentation\1_VoxelViewer2D.Presentation.csproj">
-      <Project>{cfbc2905-3d3a-4c32-836f-dc413cb8eb02}</Project>
-      <Name>1_VoxelViewer2D.Presentation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VoxelViewer2D.Application\2_VoxelViewer2D.Application.csproj">
-      <Project>{14db0a2a-45c9-4730-988c-78c0115be24c}</Project>
-      <Name>VoxelViewer2D.Application</Name>
-    </ProjectReference>
     <ProjectReference Include="..\VoxelViewer2D.Domain.Extensions\3_VoxelViewer2D.Domain.Extensions.csproj">
       <Project>{134d416e-70e5-4e6b-b0cf-42901fce64b7}</Project>
       <Name>3_VoxelViewer2D.Domain.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VoxelViewer2D.Presentation\1_VoxelViewer2D.Presentation.csproj">
+      <Project>{cfbc2905-3d3a-4c32-836f-dc413cb8eb02}</Project>
+      <Name>1_VoxelViewer2D.Presentation</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
