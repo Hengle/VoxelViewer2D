@@ -6,10 +6,10 @@
     using Microsoft.Extensions.DependencyInjection;
     using VoxelViewer2D.Domain;
 
-    public partial class App : System.Windows.Application {
+    public partial class App : System.Windows.Application, IServiceProvider {
 
         public static new App Current => System.Windows.Application.Current as App;
-        public ServiceProvider Container { get; private set; }
+        private ServiceProvider Container { get; set; }
 
 
         // Events/Init
@@ -17,11 +17,16 @@
             var services = new ServiceCollection();
             services.AddSingleton( VoxelMapNoiseFactory.Create( 128, 64 ) );
             //services.AddSingleton( VoxelMapCircleFactory.Create( 128, 64 ) );
-            //services.AddSingleton( VoxelMapBitmapFactory.Create( VoxelViewer2D.Properties.Resources.Image_1 ) );
             Container = services.BuildServiceProvider();
         }
         protected override void OnExit(ExitEventArgs e) {
             Container.Dispose();
+        }
+
+
+        // IServiceProvider
+        public object GetService(Type serviceType) {
+            return Container.GetService( serviceType );
         }
 
 

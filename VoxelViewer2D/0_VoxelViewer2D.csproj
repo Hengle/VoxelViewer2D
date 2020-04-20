@@ -112,11 +112,11 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VoxelViewer.Domain\3_VoxelViewer2D.Domain.csproj">
+    <ProjectReference Include="..\VoxelViewer2D.Domain\3_VoxelViewer2D.Domain.csproj">
       <Project>{f75cbc23-7d0b-4409-9164-166d8c5b3f59}</Project>
       <Name>VoxelViewer2D.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VoxelViewer.Presentation\1_VoxelViewer2D.Presentation.csproj">
+    <ProjectReference Include="..\VoxelViewer2D.Presentation\1_VoxelViewer2D.Presentation.csproj">
       <Project>{cfbc2905-3d3a-4c32-836f-dc413cb8eb02}</Project>
       <Name>1_VoxelViewer2D.Presentation</Name>
     </ProjectReference>
