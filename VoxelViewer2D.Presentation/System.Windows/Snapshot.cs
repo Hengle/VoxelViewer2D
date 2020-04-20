@@ -18,12 +18,12 @@
             var size = (Vector) control.RenderSize * scale;
             var bitmap = GetSnapshot( control, size.X, size.Y );
             var path = GetUniquePath( PathToSave );
-            SaveSnapshot( bitmap, path );
+            SaveBitmap( bitmap, path );
             Trace.WriteLine( $"Snapshot is saved: Width={bitmap.Width}, Height={bitmap.Height}, Path={path}" );
         }
 
 
-        // Helpers/UIElement
+        // Helpers/Snapshot
         private static BitmapSource GetSnapshot(UIElement element, double width, double height) {
             var visual = new DrawingVisual();
             using (var context = visual.RenderOpen()) {
@@ -36,7 +36,7 @@
         }
 
         // Helpers/File
-        private static void SaveSnapshot(BitmapSource bitmap, string path) {
+        private static void SaveBitmap(BitmapSource bitmap, string path) {
             Directory.CreateDirectory( Path.GetDirectoryName( path ) );
             using (var stream = File.Create( path )) {
                 var encoder = new PngBitmapEncoder();

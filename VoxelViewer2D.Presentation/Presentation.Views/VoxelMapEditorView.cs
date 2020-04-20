@@ -27,7 +27,7 @@
         // Events/Init
         protected override void OnInitialized(EventArgs e) {
             base.OnInitialized( e );
-            Map = App.Current?.GetRequiredService<VoxelMap>();
+            Map = Application.Current.GetContainer()?.GetRequiredService<VoxelMap>();
             Content.Source = Map;
             //AddHandler( UIElement.MouseDownEvent, (MouseButtonEventHandler) OnMouseDown, true );
             //AddHandler( UIElement.MouseMoveEvent, (MouseEventHandler) OnMouseMove, true );

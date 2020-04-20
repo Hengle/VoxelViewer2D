@@ -75,6 +75,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Presentation.Views\VoxelMapView.cs" />
+    <Compile Include="System.Windows\ApplicationExtensions.cs" />
     <Compile Include="System.Windows\PointExtensions.cs" />
     <Compile Include="System.Windows\Snapshot.cs" />
     <Page Include="Presentation.Views\MainWindow.xaml">
