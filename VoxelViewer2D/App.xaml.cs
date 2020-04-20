@@ -13,7 +13,6 @@
 
         // Events/Init
         protected override void OnStartup(StartupEventArgs e) {
-
             Container = CreateContainer();
         }
         protected override void OnExit(ExitEventArgs e) {

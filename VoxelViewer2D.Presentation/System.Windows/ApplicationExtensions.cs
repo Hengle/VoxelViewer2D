@@ -7,7 +7,7 @@
 
 
         public static IServiceProvider GetContainer(this Application application) {
-            return (application as IContainerProvider).Container;
+            return (application as IContainerProvider)?.Container;
         }
 
 
